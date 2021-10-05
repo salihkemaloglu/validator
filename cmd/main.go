@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	http.HandleFunc("/validate/vat-id/", handler.VatID)
+	http.HandleFunc("/validate/vat-id/", handler.ValidateVatID)
 
 	fmt.Printf("Starting server at port 8081\n")
 	log.Fatal(http.ListenAndServe(":8081", nil))
