@@ -9,6 +9,8 @@ import (
 	"github.com/salihkemaloglu/validator/pkg/model"
 )
 
+const EUVIES_SOAP_Service = "http://ec.europa.eu/taxation_customs/vies/services/checkVatService"
+
 func getTemplate() string {
 	return `<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
 	xmlns:tns1="urn:ec.europa.eu:taxud:vies:services:checkVat:types"
@@ -38,7 +40,6 @@ func GenerateSOAPRequest(vatID string) (*http.Request, error) {
 	}
 
 	doc := &bytes.Buffer{}
-	// Replacing the doc from template with actual req values
 	err = template.Execute(doc, req)
 	if err != nil {
 		return nil, err
@@ -51,7 +52,7 @@ func GenerateSOAPRequest(vatID string) (*http.Request, error) {
 		return nil, err
 	}
 
-	r, err := http.NewRequest(http.MethodPost, "http://ec.europa.eu/taxation_customs/vies/services/checkVatService", bytes.NewBuffer(doc.Bytes()))
+	r, err := http.NewRequest(http.MethodPost, EUVIES_SOAP_Service, bytes.NewBuffer(doc.Bytes()))
 	if err != nil {
 		return nil, err
 	}
